@@ -650,15 +650,15 @@ test37() {
 test38() {
     local name="38_heartbleed_attack_Heartbleed_AT0035"
     echo "Running Test 38: Heartbleed Exploit Test"
-    if [ -z "$JUICESHOP_IP" ]; then
+    if [ -z "$METASPLOITABLE_IP" ]; then
         echo "HEARTBLEED_TARGET_IP not set, skipping test."
         return
     fi
-    TARGET_IP="$JUICESHOP_IP"
+    TARGET_IP="$METASPLOITABLE_IP"
     if [ "$CAPTURE_ENABLED" = true ]; then
-        capture_traffic "$name" timeout "$TIMEOUT" /usr/bin/python2.7 /opt/HeartBleed/heartbleed.py "$HEARTBLEED_TARGET_IP" -p 8443
+        capture_traffic "$name" timeout "$TIMEOUT" /opt/HeartBleed/heartbleed-exploit.py "$TARGET_IP" --port 8443
     else
-        timeout "$TIMEOUT" /usr/bin/python2.7 /opt/HeartBleed/heartbleed.py "$HEARTBLEED_TARGET_IP" -p 8443
+        timeout "$TIMEOUT" /opt/HeartBleed/heartbleed-exploit.py "$TARGET_IP" -port 8443
     fi
 }
 
